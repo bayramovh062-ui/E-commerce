@@ -4,22 +4,14 @@ import logo from '../images/logo.png'
 import { TbBucket } from "react-icons/tb";
 import { FaMoon } from "react-icons/fa";
 import { IoSunny } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTheme } from '../redux/slice/ProductSlice';
 
 
 function Header() {
-    const [isClick, setIsClick] = useState(true)
+    const { isClick } = useSelector((store) => { return store.product })
+    const dispatch = useDispatch()
 
-    const changeTheme = () => {
-        const root = document.getElementById('root')
-        if (isClick) {
-            root.style.backgroundColor = 'black'
-            root.style.color = 'white'
-        } else {
-            root.style.backgroundColor = 'white'
-            root.style.color = 'black'
-        }
-        setIsClick(!isClick)
-    }
     return (
         <div>
             <div className='header flex-row space-items'>
@@ -27,7 +19,7 @@ function Header() {
                 <div className='flex-row'>
                     <input className='search-input' placeholder='search an item'></input>
                     <TbBucket className='icons' />
-                    {isClick ? <FaMoon onClick={() => { changeTheme() }} className='icons' /> : <IoSunny className='icons' onClick={() => { changeTheme() }} />}
+                    {isClick ? <FaMoon onClick={() => { dispatch(changeTheme()) }} className='icons' /> : <IoSunny className='icons' onClick={() => { dispatch(changeTheme()) }} />}
                 </div>
             </div>
         </div>
