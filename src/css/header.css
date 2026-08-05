@@ -8,6 +8,10 @@
     height: 80px;
 }
 
+.main-logo:hover {
+    cursor: pointer;
+}
+
 .search-input {
     border: none;
     border-bottom: 1px black solid;
