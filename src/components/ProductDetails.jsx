@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getAllProducts } from '../redux/slice/ProductSlice'
+import { getAllProducts } from '../redux/slice/productSlice'
 import '../css/productDetails.css'
 import { Backdrop, CircularProgress } from '@mui/material';
 import { CiCirclePlus } from "react-icons/ci";
