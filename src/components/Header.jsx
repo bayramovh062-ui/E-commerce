@@ -5,7 +5,7 @@ import { TbBucket } from "react-icons/tb";
 import { FaMoon } from "react-icons/fa";
 import { IoSunny } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme, setSearchInputValue } from '../redux/slice/ProductSlice';
+import { changeTheme, setSearchInputValue } from '../redux/slice/productSlice';
 import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import { toggleDrawer } from '../redux/slice/basketSlice';

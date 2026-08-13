@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts } from '../redux/slice/ProductSlice'
+import { getAllProducts } from '../redux/slice/productSlice'
 import Product from './Product'
 import { Backdrop, CircularProgress } from '@mui/material';
 
