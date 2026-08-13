@@ -7,7 +7,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 function ProductList() {
     const dispatch = useDispatch()
     const { products, loading } = useSelector((store) => { return store.product })
-
+    const { searchInputValue } = useSelector((store) => { return store.product })
     useEffect(() => {
         dispatch(getAllProducts())
     }, [])
@@ -21,7 +21,7 @@ function ProductList() {
                 <CircularProgress color="inherit" />
             </Backdrop>
             <div className='flex-row all-products'>
-                {products && products.map((product) => {
+                {products && products.filter((product) => product.title.toLowerCase().includes(searchInputValue.toLowerCase())).map((product) => {
                     return <Product key={product.id} product={product} />
                 })}
             </div>

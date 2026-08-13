@@ -6,6 +6,7 @@ export const initialState = {
     selectedProduct: {},
     loading: false,
     isClick: true,
+    searchInputValue: ''
 }
 
 const BASE_URL = 'https://fakestoreapi.com'
@@ -22,13 +23,17 @@ export const productSlice = createSlice({
         changeTheme(state) {
             const root = document.getElementById('root')
             if (state.isClick) {
-                root.style.backgroundColor = 'black'
+                root.style.backgroundColor = '#222222'
                 root.style.color = 'white'
             } else {
                 root.style.backgroundColor = 'white'
                 root.style.color = 'black'
             }
             state.isClick = !state.isClick
+        },
+
+        setSearchInputValue(state, action) {
+            state.searchInputValue = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -42,6 +47,6 @@ export const productSlice = createSlice({
     }
 })
 
-export const { changeTheme } = productSlice.actions
+export const { changeTheme, setSearchInputValue } = productSlice.actions
 
 export default productSlice.reducer

@@ -7,6 +7,8 @@ import { Backdrop, CircularProgress } from '@mui/material';
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import Alert from '@mui/material/Alert';
+import { FaCartPlus } from "react-icons/fa";
+import { addToBasket, getTotalPriceByProduct } from '../redux/slice/basketSlice'
 
 
 
@@ -18,7 +20,10 @@ function ProductDetails() {
     const dispatch = useDispatch()
     const [count, setCount] = useState(0)
     const [showAlert, setShowAlert] = useState(false)
+    const [showCantBeZeroAlert, setShowCantBeZeroAlert] = useState(false)
+    const [showAddCartMessage, setShowAddCartMessage] = useState(false)
     const timeRef = useRef(null)
+    const { basketList } = useSelector((store) => store.basket)
 
     useEffect(() => {
         if (products.length == 0) {
@@ -34,6 +39,19 @@ function ProductDetails() {
         >
             <CircularProgress color="inherit" />
         </Backdrop>
+    }
+
+    const makeRequest = () => {
+        const { id, title, price, image } = product
+        const totalPrice = getTotalPriceByProduct(product, count)
+        return {
+            id,
+            title,
+            price,
+            image,
+            count,
+            totalPrice
+        }
     }
 
     const increment = () => {
@@ -66,6 +84,17 @@ function ProductDetails() {
                         you can't use negative numbers for order
                     </Alert>
                 )}
+                {showCantBeZeroAlert && (
+                    <Alert severity='error'>
+                        Count can't be zero
+                    </Alert>
+                )}
+                {showAddCartMessage && (
+                    <Alert severity='success'>
+                        item added to cart with successfully!
+                    </Alert>
+                )}
+
                 <h1 className='margin-fix' style={{ color: 'rgb(183, 82, 82)' }}>{product.title}</h1>
                 <h2 className='margin-fix' >{product.description}</h2>
                 <h1 className='margin-fix' style={{ marginTop: '30px' }}>{product.price} ₺</h1>
@@ -73,7 +102,32 @@ function ProductDetails() {
                 <div className='order-count flex-row'>
                     <CiCirclePlus className='order-icons' onClick={() => { increment() }} /><span style={{ fontWeight: '900', fontSize: 'x-large', fontFamily: 'Arial, Helvetica, sans-serif' }}>{count}</span><CiCircleMinus onClick={() => { decrement() }} className='order-icons' />
                 </div>
-                <button className='order-button'>Order</button>
+                <div className='flex-row' style={{ alignItems: 'center' }}>
+                    <button className='order-button' onClick={() => {
+                        if (count === 0) {
+                            setShowCantBeZeroAlert(true)
+
+                            if (timeRef.current) {
+                                clearTimeout(timeRef.current)
+                            }
+
+                            timeRef.current = setTimeout(() => {
+                                setShowCantBeZeroAlert(false)
+                            }, 1500);
+                        } else {
+                            dispatch(addToBasket(makeRequest()))
+                            setShowAddCartMessage(true)
+                            if (timeRef.current) {
+                                clearTimeout(timeRef.current)
+                            }
+
+                            timeRef.current = setTimeout(() => {
+                                setShowAddCartMessage(false)
+                            }, 1500)
+                        }
+
+                    }}>Add to cart <FaCartPlus style={{ width: '30px', height: '20px' }} /></button>
+                </div>
             </div>
         </div >
     )

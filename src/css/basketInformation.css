@@ -1,0 +1,67 @@
+.basket-image {
+    width: 135px;
+    height: 145px;
+}
+
+.information-wrapper {
+    margin: 8px;
+    height: 195px;
+    box-shadow: 1px 4px 3px rgb(184, 183, 183);
+    transition: all 0.6s;
+}
+
+.remove-button {
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(187, 121, 121);
+    margin-left: 7px;
+}
+
+.price-text {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(186, 47, 47);
+    margin-left: 7px;
+}
+
+.remove-button:hover {
+    cursor: pointer;
+    background-color: rgb(187, 77, 77);
+}
+
+.information-wrapper:hover {
+    box-shadow: 1px 3px 10px;
+}
+
+.clear-button {
+    background-color: rgb(220, 104, 104);
+    border: none;
+    border-radius: 8px;
+    width: 75px;
+    height: 25px;
+    text-align: center;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.clear-button:hover {
+    background-color: rgb(225, 39, 39);
+    cursor: pointer;
+}
+
+.final-order-button {
+    background-color: rgb(10, 215, 10);
+    border: none;
+    border-radius: 8px;
+    width: 75px;
+    height: 25px;
+    text-align: center;
+    margin-right: 8px;
+    transition: all 0.6s;
+}
+
+.final-order-button:hover {
+    background-color: rgb(6, 148, 6);
+    cursor: pointer;
+}
