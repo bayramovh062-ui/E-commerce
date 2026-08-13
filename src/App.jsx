@@ -12,8 +12,7 @@ import './css/basketInformation.css'
 import BasketDetails from './components/BasketDetails'
 import axios from 'axios'
 import { Alert } from '@mui/material'
-
-
+import toast, { Toaster } from 'react-hot-toast'
 function App() {
 
   const { basketList, isDrawerOpen } = useSelector((store) => store.basket)
@@ -39,7 +38,7 @@ function App() {
 
   const handleSendOrder = async () => {
     if (!basketList || basketList.length === 0) {
-      alert(`your basket can't be empty!`)
+      toast.error("Your basket can't be empty!")
       return
     }
 
@@ -49,15 +48,13 @@ function App() {
     let message = `🛒 <b>There is a new order!</b>\n\n`
 
     basketList.forEach((product, index) => {
-      message += `<b>${index + 1}. ${product.title}</b>\n`;
-      message += `   • Count: ${product.count || 1} \n`;
-      message += `   • Price: ${product.price} ₺\n\n`;
+      message += `<b>${index + 1}. ${product.title}</b>\n`
+      message += `   • Count: ${product.count || 1} \n`
+      message += `   • Price: ${product.price} ₺\n\n`
+    })
 
-
-    });
-
-    message += `----------------------------\n`;
-    message += `💰 <b>Total amount:</b> ${getTotalPriceForAllProducts(basketList)} ₺`;
+    message += `----------------------------\n`
+    message += `💰 <b>Total amount:</b> ${getTotalPriceForAllProducts(basketList)} ₺`
 
     try {
       await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -66,14 +63,15 @@ function App() {
         parse_mode: 'HTML'
       })
 
-      alert('Your order has been successfully submitted!')
+      toast.success('Your order has been successfully submitted! 🎉')
+
       dispatch(clearBasketList())
     } catch (error) {
-      console.error('An error occurred while sending the Telegram message:')
-      alert('An error occured while sending the order')
+      console.error('An error occurred while sending the Telegram message:', error)
+
+      toast.error('An error occurred while sending the order.')
     }
   }
-
 
 
   return (
@@ -148,8 +146,12 @@ function App() {
           </BrowserRouter>
         </PageContainer>
       </div>
+      <Toaster position="top-right" reverseOrder={false} />
+
     </div>
   )
 }
+
+
 
 export default App
